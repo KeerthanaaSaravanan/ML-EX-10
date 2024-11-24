@@ -1,9 +1,8 @@
-# BLENDED LEARNING
 # Implementation of Principal Component Analysis (PCA) for Dimensionality Reduction on Energy Data
 <H3>NAME: KEERTHANA S</H3>
 <H3>REGISTER NO.: 212223240070</H3>
 <H3>EX. NO.10</H3>
-<H3>DATE:</H3>
+<H3>DATE:11.11.24</H3>
 
 ## AIM:
 To implement Principal Component Analysis (PCA) to reduce the dimensionality of the energy data.
@@ -32,59 +31,45 @@ To implement Principal Component Analysis (PCA) to reduce the dimensionality of 
    Create visualizations of the principal components to interpret patterns and clusters in reduced dimensions.
 
 ## Program:
-```
+```py
 # Import necessary libraries
 import pandas as pd
 from sklearn.preprocessing import StandardScaler
 from sklearn.decomposition import PCA
 import matplotlib.pyplot as plt
-import seaborn as sns
 
-# Step 1: Load the dataset from a local file
-# Ensure the correct file path is provided where the dataset is saved
+# Step 1: Load the dataset
 url = "https://cf-courses-data.s3.us.cloud-object-storage.appdomain.cloud/IBM-ML0187EN-SkillsNetwork/labs/module%203/data/HeightsWeights.csv"
 data = pd.read_csv(url)
 
-# Step 2: Explore the data
-# Display the first few rows and column names for initial inspection
-print(data.head())
-print(data.columns)
+# Step 2: Preprocess the data (Feature Scaling)
+X = data[['Height(Inches)', 'Weight(Pounds)']]  # Select features for PCA
 
-# Step 3: Preprocess the data (Feature Scaling)
-# Select the relevant columns for analysis
-X = data[['Height(Inches)', 'Weight(Pounds)']]  # Use the appropriate column names
-
-# Standardize the features to bring them to the same scale
+# Scale the features using StandardScaler
 scaler = StandardScaler()
 X_scaled = scaler.fit_transform(X)
 
-# Step 4: Apply PCA for dimensionality reduction
-# Initialize PCA to reduce the features to 2 components (for simplicity)
-pca = PCA(n_components=2)
+# Step 3: Apply PCA for dimensionality reduction
+pca = PCA(n_components=2)  # Reduce to 2 principal components
 X_pca = pca.fit_transform(X_scaled)
 
-# Step 5: Analyze the explained variance
-# Print the explained variance ratio for each principal component
+# Step 4: Analyze the explained variance
 explained_variance = pca.explained_variance_ratio_
-print("Explained Variance Ratio for each Principal Component:", explained_variance)
-print("Total Explained Variance:", sum(explained_variance))
+print(f"Explained Variance Ratio: {explained_variance}")
+print(f"Total Explained Variance: {sum(explained_variance)}")
 
-# Step 6: Visualize the principal components
-# Create a DataFrame to store the principal components
-pca_df = pd.DataFrame(X_pca, columns=['PC1', 'PC2'])
-
-# Plot the first two principal components
+# Step 5: Visualize the principal components
 plt.figure(figsize=(8, 6))
-sns.scatterplot(x='PC1', y='PC2', data=pca_df, alpha=0.7)
-plt.xlabel("Principal Component 1")
-plt.ylabel("Principal Component 2")
-plt.title("PCA - Heights and Weights Dataset")
+plt.scatter(X_pca[:, 0], X_pca[:, 1], alpha=0.7)  # Scatter plot of the 2 principal components
+plt.xlabel('Principal Component 1')
+plt.ylabel('Principal Component 2')
+plt.title('PCA - Heights and Weights')
 plt.show()
 
 ```
 
 ## Output:
-<img width="789" alt="Screenshot 2024-11-14 at 11 45 57 AM" src="https://github.com/user-attachments/assets/3b283016-6521-4789-bd22-73ac4fbaa850">
+![image](https://github.com/user-attachments/assets/7f0f3226-8c9a-45e7-a318-19e681ac7eb2)
 
 
 ## Result:
